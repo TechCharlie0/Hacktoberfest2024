@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <string.h>
+
+// Define structure for student
+struct Student {
+    int rollNo;
+    char name[50];
+    float marks;
+};
+
+// Function to add a student
+void addStudent(struct Student students[], int *count) {
+    printf("Enter roll number: ");
+    scanf("%d", &students[*count].rollNo);
+    printf("Enter name: ");
+    scanf(" %[^\n]", students[*count].name); // To capture full name with spaces
+    printf("Enter marks: ");
+    scanf("%f", &students[*count].marks);
+    (*count)++;
+    printf("Student added successfully!\n");
+}
+
+// Function to display all students
+void displayStudents(struct Student students[], int count) {
+    if (count == 0) {
+        printf("No students to display.\n");
+        return;
+    }
+    
+    printf("Roll No\tName\tMarks\n");
+    for (int i = 0; i < count; i++) {
+        printf("%d\t%s\t%.2f\n", students[i].rollNo, students[i].name, students[i].marks);
+    }
+}
+
+// Function to search student by roll number
+void searchStudent(struct Student students[], int count) {
+    int rollNo;
+    printf("Enter roll number to search: ");
+    scanf("%d", &rollNo);
+    
+    for (int i = 0; i < count; i++) {
+        if (students[i].rollNo == rollNo) {
+            printf("Student found!\n");
+            printf("Roll No: %d\n", students[i].rollNo);
+            printf("Name: %s\n", students[i].name);
+            printf("Marks: %.2f\n", students[i].marks);
+            return;
+        }
+    }
+    printf("Student with roll number %d not found.\n", rollNo);
+}
+
+int main() {
+    struct Student students[100]; // Array to store students
+    int count = 0; // To keep track of number of students
+    int choice;
+
+    while (1) {
+        printf("\n--- Student Management System ---\n");
+        printf("1. Add Student\n");
+        printf("2. Display Students\n");
+        printf("3. Search Student\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                addStudent(students, &count);
+                break;
+            case 2:
+                displayStudents(students, count);
+                break;
+            case 3:
+                searchStudent(students, count);
+                break;
+            case 4:
+                printf("Exiting the program...\n");
+                return 0;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+    return 0;
+}
